@@ -1,4 +1,4 @@
-mport { useState } from "react";
+import { useState } from "react";
 
 // ── palette ────────────────────────────────────────────────────────────────
 const P = {
