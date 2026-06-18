@@ -819,6 +819,3 @@ function Bloc({color,title,children}){return <div style={{background:color,borde
 function PinInput({value,onChange,label:l}){return(<div style={{marginBottom:10}}><label style={lbl}>{l}</label><input type="password" inputMode="numeric" maxLength={4} style={{...inp,textAlign:"center",letterSpacing:8,fontSize:22}} value={value} onChange={e=>onChange(e.target.value.replace(/\D/g,"").slice(0,4))} placeholder="••••"/></div>);}
 function MonthNav({calMonth,setCalMonth}){const l=calMonth.toLocaleDateString("fr-BE",{month:"long",year:"numeric"});return(<div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8}}><button style={btn(P.eauL)} onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()-1,1))}>‹</button><span style={{fontWeight:700,fontSize:15,textTransform:"capitalize",minWidth:160,textAlign:"center",color:P.taupeD}}>{l}</span><button style={btn(P.eauL)} onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()+1,1))}>›</button></div>);}
 function buildCalDays(month){const y=month.getFullYear(),m=month.getMonth();let dow=new Date(y,m,1).getDay();if(dow===0)dow=6;else dow--;const days=[];for(let i=0;i<dow;i++)days.push(null);for(let d=1;d<=new Date(y,m+1,0).getDate();d++)days.push(new Date(y,m,d));return days;}
-
-
-  
