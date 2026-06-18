@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const SUPA_URL = "https://awrzzqpxgafvpvqxcvyx.supabase.co";
-const SUPA_KEY = sb_publishable_kxw_Zr68K-gxrHRBrYud4w_mDBRErr-
+const SUPA_KEY = "sb_publishable_kxw_Zr68K-gxrHRBrYud4w_mDBRErr-";
 
 const supa = async (path, opts = {}) => {
   const res = await fetch(`${SUPA_URL}/rest/v1/${path}`, {
