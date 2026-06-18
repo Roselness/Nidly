@@ -18,7 +18,7 @@ const db = {
   post: (t,b) => supa(t, {method:"POST", body:JSON.stringify(b)}),
   patch: (t,q,b) => supa(`${t}?${q}`, {method:"PATCH", body:JSON.stringify(b), prefer:"return=representation"}),
   delete: (t,q) => supa(`${t}?${q}`, {method:"DELETE"}),
-  upsert: (t,b) => supa(t, {method:"POST", body:JSON.stringify(b), headers:{"Prefer":"resolution=merge-duplicates,return=representation"}}),
+  upsert: (t,b) => supa(t, {method:"POST", body:JSON.stringify(b), headers:{"Prefer":"resolution=merge-duplicates,return=representation","apikey":SUPA_KEY}}),
 };
 
 const P = {
