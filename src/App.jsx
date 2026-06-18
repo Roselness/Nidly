@@ -111,8 +111,10 @@ export default function App() {
   const jourFermeture = licenceData?.jour_fermeture ?? 3;
 
   const isJourOuvert = (dateStr) => {
-    const d = new Date(dateStr).getDay();
-    return d !== 0 && d !== 6 && d !== jourFermeture;
+    // Parse date parts directly to avoid timezone issues
+    const [y,m,j] = dateStr.split("-").map(Number);
+    const d = new Date(y, m-1, j).getDay();
+    return d !== 0 && d !== 6 && d !== Number(jourFermeture);
   };
 
   const loadData = async (lcode) => {
@@ -501,9 +503,9 @@ function PresencesSection({children,presences,setPresences,calMonth,setCalMonth,
         {["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"].map(d=><div key={d} style={{textAlign:"center",fontSize:11,fontWeight:700,color:P.textL,padding:4}}>{d}</div>)}
         {days.map((d,i)=>{
           if(!d)return <div key={i}/>;
-          const key=d.toISOString().slice(0,10);
+          const key=dateToStr(d);
           const ouvert=isJourOuvert(key)&&!conges.includes(key);
-          const weekend=new Date(key).getDay()===0||new Date(key).getDay()===6;
+          const weekend=d.getDay()===0||d.getDay()===6;
           const hasP=presences[key]&&Object.keys(presences[key]).length>0;
           return(
             <div key={key} onClick={()=>ouvert&&openDay(key)} style={{background:weekend?"#f0ece7":!ouvert?"#F9E8E5":hasP?P.eau:P.white,border:`1.5px solid ${hasP?P.eauD:!ouvert?"#C0796A":P.border}`,borderRadius:10,padding:"8px 4px",textAlign:"center",cursor:ouvert?"pointer":"default",minHeight:52}}>
@@ -692,11 +694,11 @@ function CalendrierSection({conges,setConges,calMonth,setCalMonth,absences,setAb
         {["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"].map(d=><div key={d} style={{textAlign:"center",fontSize:11,fontWeight:700,color:P.textL,padding:4}}>{d}</div>)}
         {days.map((d,i)=>{
           if(!d)return <div key={i}/>;
-          const key=d.toISOString().slice(0,10);
+          const key=dateToStr(d);
           const isCong=conges.includes(key);
           const isAbs=childAbs.includes(key);
           const ouvert=isJourOuvert(key);
-          const weekend=new Date(key).getDay()===0||new Date(key).getDay()===6;
+          const weekend=d.getDay()===0||d.getDay()===6;
           return(
             <div key={key} onClick={()=>isAccueillante?(ouvert&&toggleConge(key)):(!isCong&&ouvert&&toggleAbsence(key))} style={{background:isCong?"#F9E8E5":isAbs?P.eauL:ouvert?P.white:"#f0ece7",border:`1.5px solid ${isCong?"#C0796A":isAbs?P.eauD:P.border}`,borderRadius:10,padding:"8px 4px",textAlign:"center",cursor:(isAccueillante&&ouvert)||(!isAccueillante&&ouvert)?"pointer":"default",minHeight:44}}>
               <div style={{fontSize:13,fontWeight:700,color:ouvert?P.text:"#c5bdb5"}}>{d.getDate()}</div>
@@ -818,3 +820,4 @@ function Tg({color,bg,children}){return <span style={{background:bg,color,border
 function Bloc({color,title,children}){return <div style={{background:color,borderRadius:12,padding:12,marginBottom:12}}><strong style={{fontSize:13,color:P.taupeD}}>{title}</strong><div style={{marginTop:8}}>{children}</div></div>;}
 function MonthNav({calMonth,setCalMonth}){const l=calMonth.toLocaleDateString("fr-BE",{month:"long",year:"numeric"});return(<div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8}}><button style={btn(P.eauL)} onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()-1,1))}>‹</button><span style={{fontWeight:700,fontSize:15,textTransform:"capitalize",minWidth:160,textAlign:"center",color:P.taupeD}}>{l}</span><button style={btn(P.eauL)} onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()+1,1))}>›</button></div>);}
 function buildCalDays(month){const y=month.getFullYear(),m=month.getMonth();let dow=new Date(y,m,1).getDay();if(dow===0)dow=6;else dow--;const days=[];for(let i=0;i<dow;i++)days.push(null);for(let d=1;d<=new Date(y,m+1,0).getDate();d++)days.push(new Date(y,m,d));return days;}
+function dateToStr(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),j=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${j}`;}
