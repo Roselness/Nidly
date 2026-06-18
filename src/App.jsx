@@ -14,11 +14,11 @@ const supa = async (path, opts = {}) => {
 };
 
 const db = {
-  get: (t,q="") => supa(`${t}?${q}`, {method:"GET"}),
-  post: (t,b) => supa(t, {method:"POST", body:JSON.stringify(b)}),
-  patch: (t,q,b) => supa(`${t}?${q}`, {method:"PATCH", body:JSON.stringify(b), prefer:"return=representation"}),
-  delete: (t,q) => supa(`${t}?${q}`, {method:"DELETE"}),
-  upsert: (t,b) => supa(t, {method:"POST", body:JSON.stringify(b), headers:{"Prefer":"resolution=merge-duplicates,return=representation"}}),
+  get:    (t,q="")    => supa(`${t}?${q}`, {method:"GET"}),
+  post:   (t,b)       => supa(t, {method:"POST", body:JSON.stringify(b)}),
+  patch:  (t,q,b)     => supa(`${t}?${q}`, {method:"PATCH", body:JSON.stringify(b), prefer:"return=representation"}),
+  delete: (t,q)       => supa(`${t}?${q}`, {method:"DELETE"}),
+  upsert: (t,b)       => supa(t, {method:"POST", body:JSON.stringify(b), headers:{"Prefer":"resolution=merge-duplicates,return=representation"}}),
 };
 
 const P = {
@@ -29,12 +29,12 @@ const P = {
   text:"#3D3530", textL:"#7A6E66", border:"#D8CFC4", err:"#C0796A",
 };
 
-const btn = (bg,col=P.text) => ({background:bg,border:"none",borderRadius:12,padding:"10px 20px",cursor:"pointer",fontWeight:700,color:col,fontSize:14,transition:"filter .15s",display:"inline-flex",alignItems:"center",gap:6});
-const card = (bg=P.white) => ({background:bg,borderRadius:20,padding:24,boxShadow:"0 2px 14px rgba(80,60,40,.08)",marginBottom:18});
-const inp = {border:`1.5px solid ${P.border}`,borderRadius:10,padding:"8px 12px",fontSize:14,width:"100%",boxSizing:"border-box",color:P.text,background:P.creme,outline:"none"};
-const lbl = {fontSize:13,fontWeight:600,color:P.textL,marginBottom:4,display:"block"};
+const btn  = (bg,col=P.text) => ({background:bg,border:"none",borderRadius:12,padding:"10px 20px",cursor:"pointer",fontWeight:700,color:col,fontSize:14,transition:"filter .15s",display:"inline-flex",alignItems:"center",gap:6});
+const card = (bg=P.white)    => ({background:bg,borderRadius:20,padding:24,boxShadow:"0 2px 14px rgba(80,60,40,.08)",marginBottom:18});
+const inp  = {border:`1.5px solid ${P.border}`,borderRadius:10,padding:"8px 12px",fontSize:14,width:"100%",boxSizing:"border-box",color:P.text,background:P.creme,outline:"none"};
+const lbl  = {fontSize:13,fontWeight:600,color:P.textL,marginBottom:4,display:"block"};
 
-const Lapin = ({size=32,op=.18}) => <svg width={size} height={size} viewBox="0 0 40 40" style={{opacity:op}}><ellipse cx="20" cy="26" rx="10" ry="9" fill={P.taupe}/><ellipse cx="14" cy="13" rx="3.5" ry="7" fill={P.taupe}/><ellipse cx="26" cy="13" rx="3.5" ry="7" fill={P.taupe}/><ellipse cx="20" cy="22" rx="7" ry="6" fill={P.taupeL}/><circle cx="17" cy="21" r="1.2" fill={P.taupeD}/><circle cx="23" cy="21" r="1.2" fill={P.taupeD}/><ellipse cx="20" cy="24" rx="2" ry="1.2" fill={P.taupeD}/></svg>;
+const Lapin  = ({size=32,op=.18}) => <svg width={size} height={size} viewBox="0 0 40 40" style={{opacity:op}}><ellipse cx="20" cy="26" rx="10" ry="9" fill={P.taupe}/><ellipse cx="14" cy="13" rx="3.5" ry="7" fill={P.taupe}/><ellipse cx="26" cy="13" rx="3.5" ry="7" fill={P.taupe}/><ellipse cx="20" cy="22" rx="7" ry="6" fill={P.taupeL}/><circle cx="17" cy="21" r="1.2" fill={P.taupeD}/><circle cx="23" cy="21" r="1.2" fill={P.taupeD}/><ellipse cx="20" cy="24" rx="2" ry="1.2" fill={P.taupeD}/></svg>;
 const Ourson = ({size=32,op=.18}) => <svg width={size} height={size} viewBox="0 0 40 40" style={{opacity:op}}><ellipse cx="20" cy="26" rx="11" ry="9" fill={P.taupe}/><circle cx="20" cy="18" r="8" fill={P.taupe}/><circle cx="12" cy="12" r="4.5" fill={P.taupe}/><circle cx="28" cy="12" r="4.5" fill={P.taupe}/><ellipse cx="20" cy="20" rx="5" ry="4" fill={P.taupeL}/><circle cx="17" cy="17" r="1.3" fill={P.taupeD}/><circle cx="23" cy="17" r="1.3" fill={P.taupeD}/></svg>;
 const Canard = ({size=32,op=.18}) => <svg width={size} height={size} viewBox="0 0 40 40" style={{opacity:op}}><ellipse cx="20" cy="27" rx="12" ry="8" fill={P.taupe}/><circle cx="24" cy="16" r="7" fill={P.taupe}/><ellipse cx="32" cy="17" rx="4" ry="2.5" fill={P.taupeD}/><circle cx="26" cy="14" r="1.3" fill={P.taupeD}/></svg>;
 
@@ -86,27 +86,27 @@ function PinInput({value, onChange, label:l="Code PIN (4 chiffres)"}) {
 
 // ═══════════════════════════════════════════════════════════════════════════
 export default function App() {
-  const [view,setView] = useState("login");
-  const [loginStep,setLoginStep] = useState("code"); // code | pin | newpin
-  const [section,setSection] = useState("fiches");
-  const [pSection,setPSection] = useState("calendrier");
+  const [view,setView]             = useState("login");
+  const [loginStep,setLoginStep]   = useState("code"); // code | pin | newpin
+  const [section,setSection]       = useState("fiches");
+  const [pSection,setPSection]     = useState("calendrier");
   const [licenceCode,setLicenceCode] = useState("");
   const [licenceData,setLicenceData] = useState(null);
-  const [children,setChildren] = useState([]);
-  const [presences,setPresences] = useState({});
-  const [notes,setNotes] = useState({});
-  const [conges,setConges] = useState([]);
-  const [notesCom,setNotesCom] = useState([]);
-  const [absences,setAbsences] = useState({});
-  const [loginCode,setLoginCode] = useState("");
-  const [loginPin,setLoginPin] = useState("");
-  const [loginPin2,setLoginPin2] = useState("");
-  const [loginErr,setLoginErr] = useState("");
-  const [curParent,setCurParent] = useState(null);
-  const [calMonth,setCalMonth] = useState(new Date());
-  const [loading,setLoading] = useState(false);
-  const [tempLic,setTempLic] = useState(null);
-  const [tempChild,setTempChild] = useState(null);
+  const [children,setChildren]     = useState([]);
+  const [presences,setPresences]   = useState({});
+  const [notes,setNotes]           = useState({});
+  const [conges,setConges]         = useState([]);
+  const [notesCom,setNotesCom]     = useState([]);
+  const [absences,setAbsences]     = useState({});
+  const [loginCode,setLoginCode]   = useState("");
+  const [loginPin,setLoginPin]     = useState("");
+  const [loginPin2,setLoginPin2]   = useState("");
+  const [loginErr,setLoginErr]     = useState("");
+  const [curParent,setCurParent]   = useState(null);
+  const [calMonth,setCalMonth]     = useState(new Date());
+  const [loading,setLoading]       = useState(false);
+  const [tempLic,setTempLic]       = useState(null);
+  const [tempChild,setTempChild]   = useState(null);
 
   const jourFermeture = licenceData?.jour_fermeture ?? 3;
 
@@ -310,14 +310,14 @@ function AccueillanteView({section,setSection,children,setChildren,presences,set
       </div>
       {loading&&<div style={{textAlign:"center",padding:20,color:P.textL}}>⏳ Chargement...</div>}
       <div style={{padding:"0 24px 40px",position:"relative",zIndex:2}}>
-        {section==="fiches" && <FichesSection children={children} setChildren={setChildren} licenceCode={licenceCode}/>}
-        {section==="presences" && <PresencesSection children={children} presences={presences} setPresences={setPresences} calMonth={calMonth} setCalMonth={setCalMonth} licenceCode={licenceCode} isJourOuvert={isJourOuvert} conges={conges}/>}
+        {section==="fiches"      && <FichesSection children={children} setChildren={setChildren} licenceCode={licenceCode}/>}
+        {section==="presences"   && <PresencesSection children={children} presences={presences} setPresences={setPresences} calMonth={calMonth} setCalMonth={setCalMonth} licenceCode={licenceCode} isJourOuvert={isJourOuvert} conges={conges}/>}
         {section==="facturation" && <FacturationSection children={children}/>}
-        {section==="export" && <ExportSection children={children} presences={presences}/>}
-        {section==="calendrier" && <CalendrierSection conges={conges} setConges={setConges} calMonth={calMonth} setCalMonth={setCalMonth} absences={{}} isAccueillante licenceCode={licenceCode} isJourOuvert={isJourOuvert}/>}
-        {section==="notesjour" && <NotesDuJourSection children={children} notes={notes} setNotes={setNotes} isAccueillante licenceCode={licenceCode}/>}
-        {section==="notescom" && <NotesCommunesSection notesCom={notesCom} setNotesCom={setNotesCom} isAccueillante licenceCode={licenceCode}/>}
-        {section==="parametres" && <ParametresSection licenceData={licenceData} setLicenceData={setLicenceData} licenceCode={licenceCode}/>}
+        {section==="export"      && <ExportSection children={children} presences={presences}/>}
+        {section==="calendrier"  && <CalendrierSection conges={conges} setConges={setConges} calMonth={calMonth} setCalMonth={setCalMonth} absences={{}} isAccueillante licenceCode={licenceCode} isJourOuvert={isJourOuvert}/>}
+        {section==="notesjour"   && <NotesDuJourSection children={children} notes={notes} setNotes={setNotes} isAccueillante licenceCode={licenceCode}/>}
+        {section==="notescom"    && <NotesCommunesSection notesCom={notesCom} setNotesCom={setNotesCom} isAccueillante licenceCode={licenceCode}/>}
+        {section==="parametres"  && <ParametresSection licenceData={licenceData} setLicenceData={setLicenceData} licenceCode={licenceCode}/>}
       </div>
     </div>
   );
@@ -325,7 +325,7 @@ function AccueillanteView({section,setSection,children,setChildren,presences,set
 
 // ── Paramètres ─────────────────────────────────────────────────────────────
 function ParametresSection({licenceData,setLicenceData,licenceCode}){
-  const [jour,setJour] = useState(licenceData?.jour_fermeture??3);
+  const [jour,setJour]   = useState(licenceData?.jour_fermeture??3);
   const [saved,setSaved] = useState(false);
 
   const save = async () => {
@@ -791,8 +791,8 @@ function ParentView({child,notes,conges,notesCom,absences,setAbsences,pSection,s
       <div style={{padding:"0 24px 40px",position:"relative",zIndex:2}}>
         {pSection==="calendrier"&&<CalendrierSection conges={conges} setConges={()=>{}} calMonth={calMonth} setCalMonth={setCalMonth} absences={absences} setAbsences={setAbsences} isAccueillante={false} childId={child.id} isJourOuvert={isJourOuvert}/>}
         {pSection==="notesjour" &&<NotesDuJourSection children={[child]} notes={notes} setNotes={()=>{}} isAccueillante={false} childFilter={child.id}/>}
-        {pSection==="notescom" &&<NotesCommunesSection notesCom={notesCom} setNotesCom={()=>{}} isAccueillante={false}/>}
-        {pSection==="factures" &&<ParentFactures child={child}/>}
+        {pSection==="notescom"  &&<NotesCommunesSection notesCom={notesCom} setNotesCom={()=>{}} isAccueillante={false}/>}
+        {pSection==="factures"  &&<ParentFactures child={child}/>}
       </div>
     </div>
   );
@@ -816,6 +816,5 @@ function F({label:l,value,onChange,type="text",placeholder=""}){return(<div styl
 function G2({children}){return <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>{children}</div>;}
 function Tg({color,bg,children}){return <span style={{background:bg,color,borderRadius:20,padding:"3px 10px",fontWeight:700,fontSize:12}}>{children}</span>;}
 function Bloc({color,title,children}){return <div style={{background:color,borderRadius:12,padding:12,marginBottom:12}}><strong style={{fontSize:13,color:P.taupeD}}>{title}</strong><div style={{marginTop:8}}>{children}</div></div>;}
-function PinInput({value,onChange,label:l}){return(<div style={{marginBottom:10}}><label style={lbl}>{l}</label><input type="password" inputMode="numeric" maxLength={4} style={{...inp,textAlign:"center",letterSpacing:8,fontSize:22}} value={value} onChange={e=>onChange(e.target.value.replace(/\D/g,"").slice(0,4))} placeholder="••••"/></div>);}
 function MonthNav({calMonth,setCalMonth}){const l=calMonth.toLocaleDateString("fr-BE",{month:"long",year:"numeric"});return(<div style={{display:"flex",alignItems:"center",gap:12,marginBottom:8}}><button style={btn(P.eauL)} onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()-1,1))}>‹</button><span style={{fontWeight:700,fontSize:15,textTransform:"capitalize",minWidth:160,textAlign:"center",color:P.taupeD}}>{l}</span><button style={btn(P.eauL)} onClick={()=>setCalMonth(m=>new Date(m.getFullYear(),m.getMonth()+1,1))}>›</button></div>);}
 function buildCalDays(month){const y=month.getFullYear(),m=month.getMonth();let dow=new Date(y,m,1).getDay();if(dow===0)dow=6;else dow--;const days=[];for(let i=0;i<dow;i++)days.push(null);for(let d=1;d<=new Date(y,m+1,0).getDate();d++)days.push(new Date(y,m,d));return days;}
